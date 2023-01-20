@@ -1,6 +1,13 @@
-# qb-banking
+# qb-banking - Fleeca Bank CSS & HTML Update
 
-# License
+# Own Licence
+
+    Fleeca Bank CSS & HTML Update is a free update released by myself as a modification 
+    to the work provided by the original qb-banking, I do not give permission for this
+    modifications files to be distributed outside of this github, sold for profit or to
+    be copied in full & re-released without prior communitcation with myself
+
+# Original License
 
     QBCore Framework
     Copyright (C) 2021 Joshua Eger
@@ -20,22 +27,34 @@
 
 ## Dependencies
 - [qb-core](https://github.com/qbcore-framework/qb-core)
+- [qb-atms](https://github.com/qbcore-framework/qb-atms) - For using the local ATMs around the world
 - [qb-logs](https://github.com/qbcore-framework/qb-logs) - For keeping records
 
+# New and Updated CSS & Html overhaul 
 ## Screenshots
-![Account Home](https://i.imgur.com/XazaYYI.png)
-![Debit Card Selection on ATM](https://i.imgur.com/dvJ9hnC.png)
-![Savings Account](https://i.imgur.com/1HFUL06.png)
-![Transfer](https://i.imgur.com/SqADuRg.png)
-![Account Options](https://i.imgur.com/blMgfpG.png)
+- Main Home Page with all current data
+
+![image](https://user-images.githubusercontent.com/33585512/213752061-4b91a025-1710-448b-bf19-35c2940c4fe4.png)
+
+- Account Options - Auto Updating card image, name, card number & signature
+
+![image2](https://user-images.githubusercontent.com/33585512/213752153-620d433b-e6d2-492a-8ce1-4ff30bb550eb.png)
+
+- Money Management - Shows all the money types & systems on one page, transfers waiting to be fixed by main QB-Banking.
+
+![image3](https://user-images.githubusercontent.com/33585512/213752352-5763021d-16b1-4e09-9a31-3e21420c5d26.png)
+
+- Current account statement with dark theme showing all details.
+
+![image4](https://user-images.githubusercontent.com/33585512/213752460-4f25431c-d4db-42aa-b793-e7b2e6d2732e.png)
 
 ## Features
-- Debit card (MasterCard/Visa) with PIN
-- Savings Account
-- Detailed interface
-- /atm for players
+- Debit card Management (MasterCard/Visa) with PIN - Image for card with live updated numbers, name & signature.
+- Savings Account - Using money management screen to deposit or withdraw money.
+- Refreshed Detailed interface - CSS Overhaul with a GTA Fleeca Bank theme.
 - /refreshBanks
 - Business and Gang accounts
+- Statements include ATM transactions (Pull request from QB-ATMS)
 
 ## Installation
 ### Manual
@@ -46,6 +65,7 @@
 ensure qb-core
 ensure qb-logs
 ensure qb-banking
+ensure qb-atms
 ```
 # Server.cfg Convar Update
 - Global DrawTextUi Option
