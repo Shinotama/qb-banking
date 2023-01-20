@@ -18,6 +18,8 @@ window.addEventListener("message", function (event) {
         $("#currentStatement").DataTable().destroy();
         $("#currentStatementATM").DataTable().destroy();
         $("#accountName").html(event.data.information.name)
+        $("#cardName").html(event.data.information.name)
+        $("#cardName2").html(event.data.information.name)
         $("#accountNumber").html(event.data.information.accountinfo);
         $("#accountSortCode").html(event.data.information.accountinfo.sort_code);
 
@@ -39,6 +41,7 @@ window.addEventListener("message", function (event) {
 
         $("#savingsStatementContents").html('');
         $("#savingsBalance").html('');
+        $("#savingsBalance1").html('');
         $("#accountName2").html('');
         $("#saccountNumber").html('');
         $("#saccountSortCode").html('');
@@ -53,11 +56,20 @@ window.addEventListener("message", function (event) {
         }
         if(event.data.information.cardInformation !== undefined && event.data.information.cardInformation !== null) {
             currentBankCard = event.data.information.cardInformation;
-            $('#cardType').html(event.data.information.cardInformation.type)
+            $('#cardType').html(event.data.information.cardInformation.cardType)
+            if (event.data.information.cardInformation.cardType === "mastercard") {
+                $("#showcardTypeimageFront").html("<div class='showcardTypeimageMastercardFront'><div><div id='cardNumberShow'>************3455</div><div id='cardName'>Test</div></div></div>");
+                $("#showcardTypeimageBack").html("<div class='showcardTypeimageMastercardBack'><div><div id='cardName2'>Test</div></div></div>");
+              } else {
+                $("#showcardTypeimageFront").html("<div class='showcardTypeimageVisaFront'><div><div id='cardNumberShow'>************3455</div><div id='cardName'>Test</div></div></div>");
+                $("#showcardTypeimageBack").html("<div class='showcardTypeimageVisaBack'><div><div id='cardName2'>Test</div></div></div>");
+              }
             var str = ""+ event.data.information.cardInformation.cardNumber + "";
             var res = str.slice(12);
             var cardNumber = "************" + res;
-            $('#cardNumberShow').html(cardNumber)
+            $('#cardNumberShow').html(cardNumber);
+            $('#cardName').html(event.data.information.name)
+            $('#cardName2').html(event.data.information.name)
         }
         populateBanking(event.data.information);
         $("#bankingContainer").css({"display":"block"});
@@ -124,6 +136,7 @@ function setupSavingsMenu(data, name)
     statement2 = data.statement
     $("#savingsStatementContents").html('');
     $("#savingsBalance").html(data.amount);
+    $("#savingsBalance1").html(data.amount);
     $("#accountName2").html(name);
     $("#saccountNumber").html(data.details.account);
     $("#saccountSortCode").html(data.details.sortcode);
@@ -188,13 +201,13 @@ function populateBanking(data)
     $("#currentStatementContents").html('');
     if(data.cardInformation !== undefined) {
         if (data.cardInformation.cardLocked == true) {
-            $("#debitCardStatus").removeClass('bg-success');
+            $("#debitCardStatus").removeClass('bg-dark');
             $("#debitCardStatus").addClass('bg-danger');
-            $("#debitCardStatus").html('<div class="card-header">Card Locked</div><div class="card-body">Your card is currently LOCKED.</div><div class="card-footer"><button class="btn btn-primary btn-block" id="unLockCard">Unlock/Unblock Card</button></div>');
+            $("#debitCardStatus").html('<div class="card-header">Card Locked</div><div class="card-body">Your card is currently LOCKED.</div><div class="card-footer"><button class="boldbutton btn btn-primary btn-block" id="unLockCard">Unblock Card</button></div>');
         } else {
             $("#debitCardStatus").removeClass('bg-danger');
-        $("#debitCardStatus").addClass('bg-success');
-        $("#debitCardStatus").html('<div class="card-header">Card Unlocked</div><div class="card-body">Your card is currently active.</div><div class="card-footer"><button class="btn btn-primary btn-block" id="lockCard">Lock/Block Card</button></div>');
+        $("#debitCardStatus").addClass('bg-dark');
+        $("#debitCardStatus").html('<div class="card-header">Card Unlocked</div><div class="card-body">Your card is currently active.</div><div class="card-footer"><button class="boldbutton btn btn-primary btn-block" id="lockCard">Lock/Block Card</button></div>');
         }
         $("#cardDetails").css({"display":"block"});
     } else {
@@ -254,16 +267,16 @@ $(function() {
     });
 
     $(document).on('click','#lockCard',function(){
-        $("#debitCardStatus").removeClass('bg-success');
+        $("#debitCardStatus").removeClass('bg-dark');
         $("#debitCardStatus").addClass('bg-danger');
-        $("#debitCardStatus").html('<div class="card-header">Card Locked</div><div class="card-body">Your card is currently LOCKED.</div><div class="card-footer"><button class="btn btn-primary btn-block" id="unLockCard">Unlock/Unblock Card</button></div>');
+        $("#debitCardStatus").html('<div class="card-header">Card Locked</div><div class="card-body">Your card is currently LOCKED.</div><div class="card-footer"><button class="boldbutton btn btn-primary btn-block" id="unLockCard">Unblock Card</button></div>');
         $.post('https://qb-banking/lockCard', JSON.stringify({ }));
     });
 
     $(document).on('click','#unLockCard',function(){
         $("#debitCardStatus").removeClass('bg-danger');
-        $("#debitCardStatus").addClass('bg-success');
-        $("#debitCardStatus").html('<div class="card-header">Card Unlocked</div><div class="card-body">Your card is currently active.</div><div class="card-footer"><button class="btn btn-primary btn-block" id="lockCard">Lock/Block Card</button></div>');
+        $("#debitCardStatus").addClass('bg-dark');
+        $("#debitCardStatus").html('<div class="card-header">Card Unlocked</div><div class="card-body">Your card is currently active.</div><div class="card-footer"><button class="boldbutton btn btn-primary btn-block" id="lockCard">Block Card</button></div>');
         $.post('https://qb-banking/unLockCard', JSON.stringify({ }));
     });
 
